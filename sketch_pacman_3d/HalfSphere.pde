@@ -1,7 +1,7 @@
 class HalfSphere {
 
-  final static int SCALE_X = 15; 
-  final static int SCALE_Y = 15; 
+  final static int SCALE_X = 12; 
+  final static int SCALE_Y = 16; 
 
   float radius;
   PVector[] edges;
@@ -30,16 +30,20 @@ class HalfSphere {
   PShape initShape( PVector[] edges) {
     PShape s = createShape();
     PVector v;
-    s.setFill( color( 128, 128));
+    s.setFill( color( 64, 128));
     s.setStroke( color( 255, 128));
     s.setStrokeWeight( 2);
     s.beginShape( QUADS);
     for( int i = 0; i < SCALE_X-1; ++i) {
       for( int j = 0; j < SCALE_Y; ++j) {
-        v = edges[ i*SCALE_Y + j]; vertex( v.x, v.y, v.z);
-        v = edges[ i*SCALE_Y + (j+1) % SCALE_Y]; vertex( v.x, v.y, v.z);
-        v = edges[ (i+1)*SCALE_Y + (j+1) % SCALE_Y]; vertex( v.x, v.y, v.z);
-        v = edges[ (i+1)*SCALE_Y + j]; vertex( v.x, v.y, v.z);
+        v = edges[ i*SCALE_Y + j];
+        s.vertex( v.x, v.y, v.z);
+        v = edges[ i*SCALE_Y + (j+1) % SCALE_Y];
+        s.vertex( v.x, v.y, v.z);
+        v = edges[ (i+1)*SCALE_Y + (j+1) % SCALE_Y];
+        s.vertex( v.x, v.y, v.z);
+        v = edges[ (i+1)*SCALE_Y + j];
+        s.vertex( v.x, v.y, v.z);
       }
     }
     s.endShape();
