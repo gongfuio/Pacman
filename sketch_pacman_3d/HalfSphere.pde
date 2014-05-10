@@ -1,7 +1,8 @@
 class HalfSphere {
 
-  final static int SCALE_X = 12; 
-  final static int SCALE_Y = 16; 
+  final int SCALE_X = 12; 
+  final int SCALE_Y = 16;
+  final color PACMAN_COLOR = color( 255, 192, 0); 
 
   float radius;
   PVector[] edges;
@@ -33,11 +34,11 @@ class HalfSphere {
     PShape dome = createShape();
     PShape top = createShape();
     PVector v;
-    s.setFill( color( 64, 128));
-    s.setStroke( color( 255, 128));
-    s.setStrokeWeight( 2);
 
     dome.beginShape( QUADS);
+    dome.stroke( color( 255));
+    dome.strokeWeight( 2);
+    dome.fill( PACMAN_COLOR);
     for( int i = 0; i < SCALE_X-1; ++i) {
       for( int j = 0; j < SCALE_Y; ++j) {
         v = edges[ i*SCALE_Y + j];
@@ -51,8 +52,11 @@ class HalfSphere {
       }
     }    
     dome.endShape();
-    
-    top.beginShape();
+
+    top.beginShape( TRIANGLE_FAN);
+    top.stroke( color( 255));
+    top.strokeWeight( 2);
+    top.fill( PACMAN_COLOR);
     for( int j = 0; j < SCALE_Y; ++j) {
         v = edges[ j];
         top.vertex( v.x, v.y, v.z);
