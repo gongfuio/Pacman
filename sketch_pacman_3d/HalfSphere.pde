@@ -10,11 +10,11 @@ class HalfSphere {
 
   HalfSphere( float radius) {
     this.radius = radius;
-    this.vertices = initvertices();
-    this.hs = initShape( this.vertices);
+    this.vertices = createVertices();
+    this.hs = createHalfSphere( this.vertices);
   }
 
-  PVector[] initvertices() {
+  PVector[] createVertices() {
     PVector[] vertices = new PVector[ SCALE_X * SCALE_Y];
     // cf. https://www.opengl.org/discussion_boards/showthread.php/159402-half-sphere
     for( int i = 0; i < SCALE_X; ++i) {
@@ -29,7 +29,7 @@ class HalfSphere {
     return vertices;
   }
 
-  PShape initShape( PVector[] vertices) {
+  PShape createHalfSphere( PVector[] vertices) {
     PShape s = createShape( GROUP);
     PShape dome = createShape();
     PShape top = createShape();
