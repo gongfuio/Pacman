@@ -33,32 +33,40 @@ class HalfSphere {
     PShape s = createShape( GROUP);
     PShape dome = createShape();
     PShape top = createShape();
-    PVector v;
+    PVector v, n;
 
     dome.beginShape( QUADS);
-    dome.stroke( color( 255));
-    dome.strokeWeight( 2);
     dome.fill( PACMAN_COLOR);
     for( int i = 0; i < SCALE_X-1; ++i) {
       for( int j = 0; j < SCALE_Y; ++j) {
         v = vertices[ i*SCALE_Y + j];
+        n = v.normalize(null);
+        dome.normal(n.x, n.y, n.z);
         dome.vertex( v.x, v.y, v.z);
+
         v = vertices[ i*SCALE_Y + (j+1) % SCALE_Y];
+        n = v.normalize(null);
+        dome.normal(n.x, n.y, n.z);
         dome.vertex( v.x, v.y, v.z);
+
         v = vertices[ (i+1)*SCALE_Y + (j+1) % SCALE_Y];
+        n = v.normalize(null);
+        dome.normal(n.x, n.y, n.z);
         dome.vertex( v.x, v.y, v.z);
+        
         v = vertices[ (i+1)*SCALE_Y + j];
-        dome.vertex( v.x, v.y, v.z);
+        n = v.normalize(null);
+        dome.normal(n.x, n.y, n.z);
+        dome.vertex( v.x, v.y, v.z); 
       }
     }    
     dome.endShape();
 
     top.beginShape( TRIANGLE_FAN);
-    top.stroke( color( 255));
-    top.strokeWeight( 2);
     top.fill( PACMAN_COLOR);
     for( int j = 0; j < SCALE_Y; ++j) {
         v = vertices[ j];
+        top.normal(0, 1, 0);
         top.vertex( v.x, v.y, v.z);
     }
     top.endShape();
