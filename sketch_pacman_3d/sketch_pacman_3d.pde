@@ -21,7 +21,7 @@ void draw() {
   scale( 4.0);
 
   hs.display();
-  scale( -1.0);
-  rotateZ( QUARTER_PI / 3 * 4);
+  scale( -0.99999);
+  rotateZ( QUARTER_PI / 3 * 2 * (1 + sin( millis() / 80.0)));
   hs.display();
 }
