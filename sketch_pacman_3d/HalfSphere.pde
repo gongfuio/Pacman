@@ -1,7 +1,7 @@
 class HalfSphere {
 
-  final int SCALE_X = 12; 
-  final int SCALE_Y = 16;
+  final int SCALE_X = 12;  // Nbre de méridiens (latitude)
+  final int SCALE_Y = 24; // Nbre de méridiens (longitude)
   final color PACMAN_COLOR = color( 255, 192, 0); 
 
   float radius;
@@ -39,25 +39,30 @@ class HalfSphere {
     dome.fill( PACMAN_COLOR);
     for( int i = 0; i < SCALE_X-1; ++i) {
       for( int j = 0; j < SCALE_Y; ++j) {
+        // We have to build the Quad clockwise, with normals before vertices
+        // 1. TOP RIGHT
         v = vertices[ i*SCALE_Y + j];
         n = v.normalize(null);
-        dome.normal(n.x, n.y, n.z);
+        dome.normal( n.x, n.y, n.z);
         dome.vertex( v.x, v.y, v.z);
 
-        v = vertices[ i*SCALE_Y + (j+1) % SCALE_Y];
-        n = v.normalize(null);
-        dome.normal(n.x, n.y, n.z);
-        dome.vertex( v.x, v.y, v.z);
-
-        v = vertices[ (i+1)*SCALE_Y + (j+1) % SCALE_Y];
-        n = v.normalize(null);
-        dome.normal(n.x, n.y, n.z);
-        dome.vertex( v.x, v.y, v.z);
-        
+        // 2. BOTTOM RIGHT
         v = vertices[ (i+1)*SCALE_Y + j];
         n = v.normalize(null);
-        dome.normal(n.x, n.y, n.z);
+        dome.normal( n.x, n.y, n.z);
         dome.vertex( v.x, v.y, v.z); 
+
+        // 3. BOTTOM LEFT
+        v = vertices[ (i+1)*SCALE_Y + (j+1) % SCALE_Y];
+        n = v.normalize(null);
+        dome.normal( n.x, n.y, n.z);
+        dome.vertex( v.x, v.y, v.z);
+        
+        // 4. TOP LEFT
+        v = vertices[ i*SCALE_Y + (j+1) % SCALE_Y];
+        n = v.normalize(null);
+        dome.normal( n.x, n.y, n.z);
+        dome.vertex( v.x, v.y, v.z);
       }
     }    
     dome.endShape();
@@ -75,9 +80,26 @@ class HalfSphere {
     s.addChild( top);
     return s;
   }
+  
+  void drawNormals() {
+    PVector v, n;
+
+    strokeWeight( 0.5);
+    stroke( 0, 128);
+    for( int i = 0; i < SCALE_X-1; ++i) {
+      for( int j = 0; j < SCALE_Y; ++j) {
+        v = vertices[ i * SCALE_Y + j];
+        n = v.normalize( null);
+        n.mult( 10.0);
+        n.add( v);        
+        line( v.x, v.y, v.z, n.x, n.y, n.z);
+      }
+    }    
+  }
 
   void display() {
     shape( this.hs, 0, 0);
+    // drawNormals();
   }
 
 }

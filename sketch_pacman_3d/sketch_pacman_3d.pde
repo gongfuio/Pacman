@@ -12,10 +12,8 @@ void setup() {
 
 void draw() {
   background( 192, 128);
+  directionalLight( 255, 255, 255, -1, -1, -1);
   
-  lights();
-  pointLight(255, 255, 255, 2, 2, 10);
-
   translate( width/2, height/2, 0);
   rotateX( -QUARTER_PI/3);
   rotateY(  QUARTER_PI/6 * millis() / 500);
