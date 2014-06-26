@@ -1,17 +1,27 @@
+import codeanticode.syphon.*;
 
+SyphonServer server;
 HalfSphere hs;
 
+boolean SYPHON_OUTPUT = true;
+
 void setup() {
-  size( int( displayWidth*0.85), int( displayHeight*0.85), P3D);
+  if( SYPHON_OUTPUT) {
+    size( displayWidth, displayHeight, P3D);
+    server = new SyphonServer( this, "Processing sketch");
+  } else {
+    size( int( displayWidth*0.85), int( displayHeight*0.85), P3D);
+    if( frame != null) { frame.setResizable( true); }
+  }
+
   smooth();
-  // frame.removeNotify();
-  // frame.setUndecorated( true);
-  noStroke(); 
+  noStroke();
+ 
   hs = new HalfSphere( 50.0); 
 }
 
 void draw() {
-  background( 192, 128);
+  background( 0);
   directionalLight( 255, 255, 255, -1, -1, -1);
   
   translate( width/2, height/2, 0);
@@ -24,4 +34,6 @@ void draw() {
   scale( -0.99999);
   rotateZ( QUARTER_PI / 3 * 2 * (1 + sin( millis() / 80.0)));
   hs.display();
+
+  if( SYPHON_OUTPUT) { server.sendScreen(); }
 }
