@@ -3,17 +3,21 @@ import codeanticode.syphon.*;
 SyphonServer server;
 HalfSphere hs;
 
-void setup() {
-  // size( int( displayWidth*0.85), int( displayHeight*0.85), P3D);
-  size( displayWidth, displayHeight, P3D);
-  smooth();
-  // frame.removeNotify();
-  // frame.setUndecorated( true);
-  noStroke(); 
-  hs = new HalfSphere( 50.0); 
+boolean SYPHON_OUTPUT = true;
 
-  // Create syhpon server to send frames out.
-  server = new SyphonServer(this, "Processing Syphon");
+void setup() {
+  if( SYPHON_OUTPUT) {
+    size( displayWidth, displayHeight, P3D);
+    server = new SyphonServer( this, "Processing sketch");
+  } else {
+    size( int( displayWidth*0.85), int( displayHeight*0.85), P3D);
+    if( frame != null) { frame.setResizable( true); }
+  }
+
+  smooth();
+  noStroke();
+ 
+  hs = new HalfSphere( 50.0); 
 }
 
 void draw() {
@@ -30,5 +34,6 @@ void draw() {
   scale( -0.99999);
   rotateZ( QUARTER_PI / 3 * 2 * (1 + sin( millis() / 80.0)));
   hs.display();
-  server.sendScreen();
+
+  if( SYPHON_OUTPUT) { server.sendScreen(); }
 }
